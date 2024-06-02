@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event 1</title>
+    <style>
+        /* Add your CSS styling here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2; /* Professional background color */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%; /* Adjust the size as needed */
+            max-width: 800px; /* Set maximum width if necessary */
+            margin: 20px auto; /* Center the container */
+            background-color: #ffffff; /* Classic color for the container */
+            padding: 20px; /* Add padding for content */
+            border-radius: 10px; /* Add rounded corners for a classic look */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+            text-align: center; /* Center align text within the container */
+        }
+        h1 {
+            color: #333; /* Text color */
+        }
+        .food-container {
+            display: inline-block;
+            width: 45%; /* Adjust container width */
+            margin: 10px; /* Add margin between containers */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9; /* Classic color for containers */
+            text-align: left;
+            cursor: pointer; /* Add cursor pointer to indicate clickable */
+        }
+        .food-container a {
+            text-decoration: none; /* Remove underline from hyperlinks */
+            color: #333; /* Set color for hyperlinks */
+        }
+        .toggle-buttons {
+            margin-top: 10px; /* Add space above buttons */
+        }
+        .toggle-button {
+            padding: 8px 16px; /* Add padding to buttons */
+            margin-right: 10px; /* Add margin between buttons */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50; /* Green background color */
+            color: white; /* Text color */
+            transition: background-color 0.3s; /* Smooth transition */
+        }
+        .toggle-button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        .andhra {
+            background-color: #FFD700; /* Yellow */
+        }
+        .karnataka {
+            background-color: #32CD32; /* Lime Green */
+        }
+        .tamilnadu {
+            background-color: #4169E1; /* Royal Blue */
+        }
+        .north {
+            background-color: #FF6347; /* Tomato Red */
+        }
+        .food-image {
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Event 1</h1>
+
+        <!-- Food container for Andhra Style -->
+        <div class="food-container andhra" id="andhra-container" onclick="toggleButtons('andhra-buttons')">
+            <h2>Andhra Style</h2>
+            <img src="andhra.jpg" alt="Andhra Style Food" class="food-image">
+            <p>Content for Andhra Style goes here...</p>
+            <div class="toggle-buttons" id="andhra-buttons" style="display: none;">
+                <a href="andhraveg.html" class="toggle-button">Veg</a>
+            </div>
+        </div>
+
+        <!-- Food container for Karnataka Style -->
+        <div class="food-container karnataka" id="karnataka-container" onclick="toggleButtons('karnataka-buttons')">
+            <h2>Karnataka Style</h2>
+            <img src="karnataka.jpg" alt="Karnataka Style Food" class="food-image">
+            <p>Content for Karnataka Style goes here...</p>
+            <div class="toggle-buttons" id="karnataka-buttons" style="display: none;">
+                <a href="karnataka.html" class="toggle-button">Veg</a>
+            </div>
+        </div>
+
+        <!-- Food container for Tamilnadu Style -->
+        <div class="food-container tamilnadu" id="tamilnadu-container" onclick="toggleButtons('tamilnadu-buttons')">
+            <h2>Tamilnadu Style</h2>
+            <img src="tamilnadu.jpg" alt="Tamilnadu Style Food" class="food-image">
+            <p>Content for Tamilnadu Style goes here...</p>
+            <div class="toggle-buttons" id="tamilnadu-buttons" style="display: none;">
+                <a href="Tamil.html" class="toggle-button">Veg</a>
+            </div>
+        </div>
+
+        <!-- Food container for North Indian Style -->
+        <div class="food-container north" id="north-container" onclick="toggleButtons('north-buttons')">
+            <h2>North Indian Style</h2>
+            <img src="north.jpg" alt="North Indian Style Food" class="food-image">
+            <p>Content for North Indian Style goes here...</p>
+            <div class="toggle-buttons" id="north-buttons" style="display: none;">
+                <a href="North.html" class="toggle-button">Veg</a>
+            </div>
+        </div>
+
+        <!-- Script for toggling buttons -->
+        <script>
+            function toggleButtons(containerId) {
+                var buttons = document.getElementById(containerId);
+                if (buttons.style.display === 'none') {
+                    buttons.style.display = 'block';
+                } else {
+                    buttons.style.display = 'none';
+                }
+            }
+
+            function showNonVeg() {
+                // Implement logic for displaying non-vegetarian options for selected style
+                // You can replace the alert with your desired behavior
+                alert('Showing Non-Vegetarian options for selected style');
+            }
+        </script>
+    </div>
+</body>
+</html>

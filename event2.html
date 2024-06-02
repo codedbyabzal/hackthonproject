@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Birthday Party Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .price {
+            color: #4CAF50;
+        }
+        .total {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Special Birthday Party Menu</h1>
+
+        <form id="orderForm" onsubmit="submitOrder(event)">
+            <label for="numberOfPeople">Number of People:</label>
+            <select id="numberOfPeople" name="numberOfPeople" onchange="updateTotalAmount()">
+                <option value="30">30</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+                <option value="60">60</option>
+                <option value="70">70</option>
+                <option value="80">80</option>
+                <option value="90">90</option>
+                <option value="100">100</option>
+            </select>
+
+            <h2>Welcome Drink</h2>
+            <select id="welcomeDrink" onchange="generateSelectedItems('Welcome Drink', this.value)">
+                <option value="">Select Welcome Drink</option>
+                <option value="Lemon mint">Lemon mint</option>
+                <option value="Lemon ginger">Lemon ginger</option>
+                <option value="Fruit mocktail">Fruit mocktail</option>
+                <option value="Fruti">Fruti</option>
+                <option value="Maaza">Maaza</option>
+                <option value="Mirinda">Mirinda</option>
+                <option value="Fanta">Fanta</option>
+                <option value="Pepsi">Pepsi</option>
+                <option value="Coke">Coke</option>
+                <option value="Sprite">Sprite</option>
+                <option value="Thumps up">Thumps up</option>
+            </select>
+
+            <h2>Soup</h2>
+            <select id="soup" onchange="generateSelectedItems('Soup', this.value)">
+                <option value="">Select Soup</option>
+                <option value="Tomato soup">Tomato soup</option>
+                <option value="Mixed veg soup">Mixed veg soup</option>
+                <option value="Baby corn soup">Baby corn soup</option>
+                <option value="Veg manchow soup">Veg manchow soup</option>
+            </select>
+
+            <h2>Starter</h2>
+            <select id="starter" onchange="generateSelectedItems('Starter', this.value)">
+                <option value="">Select Starter</option>
+                <option value="Gobi manchurian">Gobi manchurian</option>
+                <option value="Baby corn manchurian">Baby corn manchurian</option>
+                <option value="Veg manchurian">Veg manchurian</option>
+                <option value="Mini samosa">Mini samosa</option>
+                <option value="Veg Cutlet">Veg Cutlet</option>
+                <option value="Cheese balls">Cheese balls</option>
+            </select>
+
+            <h2>Roll</h2>
+            <select id="roll" onchange="generateSelectedItems('Roll', this.value)">
+                <option value="">Select Roll</option>
+                <option value="Veg roll">Veg roll</option>
+                <option value="Schezwan roll">Schezwan roll</option>
+            </select>
+
+            <h2>Chinese</h2>
+            <select id="chinese" onchange="generateSelectedItems('Chinese', this.value)">
+                <option value="">Select Chinese</option>
+                <option value="Veg fried rice">Veg fried rice</option>
+                <option value="Veg hakka noodles">Veg hakka noodles</option>
+            </select>
+
+            <h2>Pasta</h2>
+            <select id="pasta" onchange="generateSelectedItems('Pasta', this.value)">
+                <option value="">Select Pasta</option>
+                <option value="White sauce pasta">White sauce pasta</option>
+                <option value="Red sauce pasta">Red sauce pasta</option>
+            </select>
+
+            <h2>Sides</h2>
+            <select id="sides" onchange="generateSelectedItems('Sides', this.value)">
+                <option value="">Select Side</option>
+                <option value="Potato chips">Potato chips</option>
+                <option value="French fries">French fries</option>
+                <option value="Bajji">Bajji</option>
+            </select>
+
+            <h2>Mini BF</h2>
+            <select id="miniBF" onchange="generateSelectedItems('Mini BF', this.value)">
+                <option value="">Select Mini BF</option>
+                <option value="Mini Idly">Mini Idly</option>
+                <option value="Set dosa">Set dosa</option>
+                <option value="Sandwich">Sandwich</option>
+            </select>
+
+            <h2>White rice</h2>
+            <select id="rice" onchange="generateSelectedItems('White rice', this.value)">
+                <option value="">Select Side</option>
+                <option value="Dhal fry">Dhal fry</option>
+                <option value="Dhal tadka">Dhal tadka</option>
+                <option value="Dhal makhni">Dhal makhni</option>
+                <option value="Rasam">Rasam</option>
+                <option value="Sambar">Sambar</option>
+            </select>
+
+            <h2>Selected Items</h2>
+            <table id="selectedItems">
+                <tr>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Action</th>
+                </tr>
+            </table>
+
+            <h2>Add-Ons (Additional Charges)</h2>
+            <table id="addOns">
+                <tr>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                </tr>
+            </table>
+
+            <h2>Total Amount</h2>
+            <p id="totalAmount" class="total">Total: Rs. 0</p>
+
+            <label for="eventDate">Event Date:</label>
+            <input type="date" id="eventDate" name="eventDate" required>
+
+            <label for="eventTime">Event Time:</label>
+            <input type="time" id="eventTime" name="eventTime" required>
+
+            <label for="customerName">Name:</label>
+            <input type="text" id="customerName" name="customerName" required>
+
+            <label for="customerEmail">Email:</label>
+            <input type="email" id="customerEmail" name="customerEmail" required>
+
+            <label for="customerPhone">Phone:</label>
+            <input type="tel" id="customerPhone" name="customerPhone" required>
+
+            <button type="submit" id="submitButton">Submit Order</button>
+        </form>
+    </div>
+
+    <script>
+        const orderOptions = {
+            "Price": {
+                "30": 12600,
+                "40": 16000,
+                "50": 20000,
+                "60": 23000,
+                "70": 20000,
+                "80": 29000,
+                "90": 37000,
+                "100": 35000
+            }
+        };
+
+        function generateSelectedItems(category, item) {
+            if (item === "") return; // Don't do anything if no item is selected
+
+            const selectedItemsTable = document.getElementById("selectedItems");
+
+            // Check if the item is already selected
+            for (let i = 1; i < selectedItemsTable.rows.length; i++) {
+                if (selectedItemsTable.rows[i].cells[0].textContent === category) {
+                    selectedItemsTable.rows[i].cells[1].textContent = item;
+                    updateTotalAmount();
+                    return;
+                }
+            }
+
+            const row = selectedItemsTable.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
+
+            cell1.textContent = category;
+            cell2.textContent = item;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener("click", function () {
+                selectedItemsTable.deleteRow(row.rowIndex);
+                updateTotalAmount();
+            });
+            cell3.appendChild(deleteButton);
+
+            updateTotalAmount();
+        }
+
+        function updateTotalAmount() {
+            const numberOfPeople = document.getElementById("numberOfPeople").value;
+            const totalAmount = orderOptions["Price"][numberOfPeople];
+            document.getElementById("totalAmount").textContent = `Total: Rs. ${totalAmount}`;
+        }
+
+        async function submitOrder(event) {
+            event.preventDefault();
+
+            const selectedItemsTable = document.getElementById("selectedItems");
+            const rows = selectedItemsTable.rows;
+            const selectedItems = [];
+            for (let i = 1; i < rows.length; i++) {
+                const category = rows[i].cells[0].textContent;
+                const item = rows[i].cells[1].textContent;
+                selectedItems.push(`${category}: ${item}`);
+            }
+
+            const numberOfPeople = document.getElementById("numberOfPeople").value;
+            const totalAmount = orderOptions["Price"][numberOfPeople];
+
+            const eventDate = document.getElementById("eventDate").value;
+            const eventTime = document.getElementById("eventTime").value;
+
+            const customerName = document.getElementById("customerName").value;
+            const customerEmail = document.getElementById("customerEmail").value;
+            const customerPhone = document.getElementById("customerPhone").value;
+
+            const orderDetails = {
+                numberOfPeople: numberOfPeople,
+                selectedItems: selectedItems,
+                totalAmount: totalAmount,
+                eventDate: eventDate,
+                eventTime: eventTime,
+                customerName: customerName,
+                customerEmail: customerEmail,
+                customerPhone: customerPhone
+            };
+
+            try {
+                const response = await fetch('your-server-endpoint', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderDetails)
+                });
+
+                if (response.ok) {
+                    alert("Order submitted successfully");
+                } else {
+                    alert("Failed to submit the order");
+                }
+            } catch (error) {
+                console.error("Error submitting the order:", error);
+                alert("An error occurred while submitting the order");
+            }
+        }
+    </script>
+</body>
+</html>

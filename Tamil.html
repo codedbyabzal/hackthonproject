@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Tamil Nadu Veg Menu</title>
+    <style>
+        /* Add your CSS styling here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2; /* Professional background color */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%; /* Adjust the size as needed */
+            max-width: 800px; /* Set maximum width if necessary */
+            margin: 20px auto; /* Center the container */
+            background-color: #ffffff; /* Classic color for the container */
+            padding: 20px; /* Add padding for content */
+            border-radius: 10px; /* Add rounded corners for a classic look */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+            text-align: left; /* Left align text within the container */
+        }
+        h1, h2 {
+            color: #333; /* Text color */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .price {
+            color: #4CAF50; /* Green color for price */
+        }
+        .total {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tamil Nadu Veg Menu</h1>
+
+        <form id="orderForm" onsubmit="submitOrder(event)">
+            <label for="numberOfPeople">Number of People:</label>
+            <select id="numberOfPeople" name="numberOfPeople" onchange="updateTotalAmount()">
+                <option value="30">30</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+                <option value="60">60</option>
+                <option value="70">70</option>
+                <option value="80">80</option>
+                <option value="90">90</option>
+                <option value="100">100</option>
+            </select>
+
+            <!-- Welcome Drink -->
+            <h2>Welcome Drink</h2>
+            <select id="welcomeDrink" onchange="selectOnlyOne(this)">
+                <option value="">Select Welcome Drink</option>
+                <option value="Buttermilk">Buttermilk</option>
+                <option value="Lemon Soda">Lemon Soda</option>
+                <option value="Rose Milk">Rose Milk</option>
+                <option value="Neer Mor">Neer Mor</option>
+                <option value="Panakam">Panakam</option>
+                <option value="Jigarthanda">Jigarthanda</option>
+            </select>
+
+            <!-- Indian Bread -->
+            <h2>Indian Bread</h2>
+            <select id="indianBread" onchange="selectOnlyOne(this)">
+                <option value="">Select Indian Bread</option>
+                <option value="Chapathi">Chapathi</option>
+                <option value="Poori">Poori</option>
+                <option value="Appam">Appam</option>
+                <option value="Parotta">Parotta</option>
+                <option value="Idiyappam">Idiyappam</option>
+            </select>
+
+            <!-- Veg Gravy -->
+            <h2>Veg Gravy</h2>
+            <select id="vegGravy" onchange="selectOnlyOne(this)">
+                <option value="">Select Veg Gravy</option>
+                <option value="Channa Masala">Channa Masala</option>
+                <option value="Veg Kurma">Veg Kurma</option>
+                <option value="Paneer Butter Masala">Paneer Butter Masala</option>
+                <option value="Aloo Gobi Masala">Aloo Gobi Masala</option>
+                <option value="Malai Kofta">Malai Kofta</option>
+            </select>
+
+            <!-- Flavored Rice -->
+            <h2>Flavored Rice</h2>
+            <select id="flavouredRice" onchange="selectOnlyOne(this)">
+                <option value="">Select Flavored Rice</option>
+                <option value="Vegetable Biryani">Vegetable Biryani</option>
+                <option value="Lemon Rice">Lemon Rice</option>
+                <option value="Coconut Rice">Coconut Rice</option>
+                <option value="Tomato Rice">Tomato Rice</option>
+                <option value="Tamarind Rice">Tamarind Rice</option>
+            </select>
+
+            <!-- Side -->
+            <h2>Side</h2>
+            <select id="rice" onchange="selectOnlyOne(this)">
+                <option value="">Select Side</option>
+                <option value="White Rice">White Rice</option>
+            </select>
+
+            <!-- Dry Veg -->
+            <h2>Dry Veg</h2>
+            <select id="dryVeg" onchange="selectOnlyOne(this)">
+                <option value="">Select Dry Veg</option>
+                <option value="Potato Fry">Potato Fry</option>
+                <option value="Ladies Finger Fry">Ladies Finger Fry</option>
+                <option value="Brinjal Fry">Brinjal Fry</option>
+                <option value="Cabbage Poriyal">Cabbage Poriyal</option>
+                <option value="Carrot Poriyal">Carrot Poriyal</option>
+            </select>
+
+            <!-- Curd Item -->
+            <h2>Curd Item</h2>
+            <select id="curdItem" onchange="selectOnlyOne(this)">
+                <option value="">Select Curd Item</option>
+                <option value="Curd">Curd</option>
+                <option value="Curd Rice">Curd Rice</option>
+            </select>
+
+            <!-- Bajji -->
+            <h2>Bajji</h2>
+            <select id="bajji" onchange="selectOnlyOne(this)">
+                <option value="">Select Bajji</option>
+                <option value="Onion Bajji">Onion Bajji</option>
+                <option value="Potato Bajji">Potato Bajji</option>
+                <option value="Chilli Bajji">Chilli Bajji</option>
+                <option value="Raw Banana Bajji">Raw Banana Bajji</option>
+                <option value="Capsicum Bajji">Capsicum Bajji</option>
+            </select>
+
+            <!-- Extras -->
+            <h2>Extras</h2>
+            <select id="extras" onchange="selectOnlyOne(this)">
+                <option value="">Select Extra</option>
+                <option value="Sambhar">Sambhar</option>
+                <option value="Rasam">Rasam</option>
+                <option value="Kara Kuzhambu">Kara Kuzhambu</option>
+                <option value="Mor Kuzhambu">Mor Kuzhambu</option>
+                <option value="Poriyal">Poriyal</option>
+            </select>
+
+            <!-- Sweet -->
+            <h2>Sweet</h2>
+            <select id="sweet" onchange="selectOnlyOne(this)">
+                <option value="">Select Sweet</option>
+                <option value="Payasam">Payasam</option>
+                <option value="Kesari">Kesari</option>
+                <option value="Ladoo">Ladoo</option>
+                <option value="Adhirasam">Adhirasam</option>
+                <option value="Mysore Pak">Mysore Pak</option>
+            </select>
+
+            <!-- Ice Cream -->
+            <h2>Ice Cream</h2>
+            <select id="iceCream" onchange="selectOnlyOne(this)">
+                <option value="">Select Ice Cream</option>
+                <option value="Vanilla">Vanilla</option>
+                <option value="Chocolate">Chocolate</option>
+                <option value="Butterscotch">Butterscotch</option>
+            </select>
+
+            <h2>Selected Items</h2>
+            <table id="selectedItems">
+                <tr>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Action</th>
+                </tr>
+            </table>
+
+            <h2>Add-Ons (Additional Charges)</h2>
+            <table id="addOns">
+                <tr>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                </tr>
+               
+            </table>
+
+            <h2>Total Amount</h2>
+            <p id="totalAmount" class="total">Total: Rs. 0</p>
+
+            <button type="submit" id="submitButton">Submit Order</button>
+        </form>
+    </div>
+
+    <script>
+        const orderOptions = {
+            "Buffet Inclusion": ["Buffet tables", "Table & Chairs", "Leaf service (Paper Leaf & Serving set)", "Mineral water can with dispenser & Paper cups", "2-way transportation up to 20km from Kanagar Bargare", "Tissues", "Disposable Spoons", "Bowls", "Paper cups for sweet & water", "Live cooking for Poori, Chapathi, and Roti (for 100 & above)"],
+            "Leaf Service Inclusion": ["Het challing cutter", "Paper Leaf & Servingst"],
+            "Timing": ["Lunch (12:30 pm - 3:00 pm)", "Dinner (7:30 pm - 10:00 pm)"],
+            "Price": {
+                "30": 12600,
+                "40": 16000,
+                "50": 20000,
+                "60": 23000,
+                "70": 20000,
+                "80": 29000,
+                "90": 37000,
+                "100": 35000
+            }
+        };
+
+        let previousSelectedOption = null; // Variable to store the previously selected option
+
+        function selectOnlyOne(select) {
+            const options = select && select.options;
+            const selectedOption = options && options[select.selectedIndex];
+
+            // Disable all options except the selected one
+            for (let i = 0; i < options.length; i++) {
+                if (options[i] !== selectedOption) {
+                    options[i].disabled = true;
+                }
+            }
+
+            // Enable all options
+            for (let i = 0; i < options.length; i++) {
+                options[i].disabled = false;
+            }
+
+            // Disable the selected option
+            selectedOption.disabled = true;
+        }
+
+        function generateSelectedItems(category, item) {
+            const selectedItemsTable = document.getElementById("selectedItems");
+            const row = selectedItemsTable.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
+
+            cell1.textContent = category;
+            cell2.textContent = item;
+
+            // Create the "Delete" button for this row
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener("click", function() {
+                // Delete only this row when the "Delete" button is clicked
+                selectedItemsTable.deleteRow(row.rowIndex);
+
+                // Re-enable the corresponding option in the dropdown menu
+                const dropdown = document.getElementById("welcomeDrink"); // Check if this ID is correct
+                const options = dropdown.options;
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].value === item && options[i].parentNode.label === category) {
+                        options[i].disabled = false;
+                        break; // Exit loop once found
+                    }
+                }
+                updateTotalAmount();
+            });
+            cell3.appendChild(deleteButton);
+
+            // Add event listener to the second cell (item) to enforce select only one functionality
+            cell2.addEventListener("click", function() {
+                // Get all the rows of the table
+                const rows = selectedItemsTable.rows;
+
+                // Iterate over each row
+                for (let i = 0; i < rows.length; i++) {
+                    // Enable all cells in the second column
+                    rows[i].cells[1].disabled = false;
+                }
+
+                // Disable the clicked cell
+                cell2.disabled = true;
+            });
+        }
+
+        function deleteRow(row) {
+            const table = row.parentNode.parentNode; // Navigate up to the table element
+            const category = row.cells[0].textContent;
+            const item = row.cells[1].textContent;
+
+            // Re-enable the corresponding option in the dropdown menu
+            const dropdown = document.getElementById("welcomeDrink"); // Check if this ID is correct
+            const options = dropdown.options;
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].value === item && options[i].parentNode.label === category) {
+                    options[i].disabled = false;
+                    break; // Exit loop once found
+                }
+            }
+
+            // Remove the row from the table
+            table.removeChild(row);
+            updateTotalAmount();
+        }
+
+        function updateTotalAmount() {
+            const numberOfPeople = document.getElementById("numberOfPeople").value;
+            const totalAmount = orderOptions["Price"][numberOfPeople];
+            document.getElementById("totalAmount").textContent = `Total: Rs. ${totalAmount}`;
+        }
+
+        // Event listener for welcome drink selection
+        document.getElementById("welcomeDrink").addEventListener("change", function() {
+            const selectedDrink = this.value;
+            if (selectedDrink !== "") {
+                generateSelectedItems("Welcome Drink", selectedDrink);
+            }
+        });
+
+        // Event listener for Indian bread selection
+        document.getElementById("indianBread").addEventListener("change", function() {
+            const selectedBread = this.value;
+            if (selectedBread !== "") {
+                generateSelectedItems("Indian Bread", selectedBread);
+            }
+        });
+
+        // Event listener for veg gravy selection
+        document.getElementById("vegGravy").addEventListener("change", function() {
+            const selectedGravy = this.value;
+            if (selectedGravy !== "") {
+                generateSelectedItems("Veg Gravy", selectedGravy);
+            }
+        });
+
+        // Event listener for flavored rice selection
+        document.getElementById("flavouredRice").addEventListener("change", function() {
+            const selectedRice = this.value;
+            if (selectedRice !== "") {
+                generateSelectedItems("Flavored Rice", selectedRice);
+            }
+        });
+
+        // Event listener for side selection
+        document.getElementById("rice").addEventListener("change", function() {
+            const selectedSide = this.value;
+            if (selectedSide !== "") {
+                generateSelectedItems("Side", selectedSide);
+            }
+        });
+
+        // Event listener for dry veg selection
+        document.getElementById("dryVeg").addEventListener("change", function() {
+            const selectedDryVeg = this.value;
+            if (selectedDryVeg !== "") {
+                generateSelectedItems("Dry Veg", selectedDryVeg);
+            }
+        });
+
+        // Event listener for curd item selection
+        document.getElementById("curdItem").addEventListener("change", function() {
+            const selectedCurdItem = this.value;
+            if (selectedCurdItem !== "") {
+                generateSelectedItems("Curd Item", selectedCurdItem);
+            }
+        });
+
+        // Event listener for bajji selection
+        document.getElementById("bajji").addEventListener("change", function() {
+            const selectedBajji = this.value;
+            if (selectedBajji !== "") {
+                generateSelectedItems("Bajji", selectedBajji);
+            }
+        });
+
+        // Event listener for extras selection
+        document.getElementById("extras").addEventListener("change", function() {
+            const selectedExtra = this.value;
+            if (selectedExtra !== "") {
+                generateSelectedItems("Extras", selectedExtra);
+            }
+        });
+
+        // Event listener for sweet selection
+        document.getElementById("sweet").addEventListener("change", function() {
+            const selectedSweet = this.value;
+            if (selectedSweet !== "") {
+                generateSelectedItems("Sweet", selectedSweet);
+            }
+        });
+
+        // Event listener for ice cream selection
+        document.getElementById("iceCream").addEventListener("change", function() {
+            const selectedIceCream = this.value;
+            if (selectedIceCream !== "") {
+                generateSelectedItems("Ice Cream", selectedIceCream);
+            }
+        });
+
+        function submitOrder(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const selectedItemsTable = document.getElementById("selectedItems");
+    const rows = selectedItemsTable.rows;
+    let selectedItems = "";
+
+    // Get the selected items
+    for (let i = 1; i < rows.length; i++) {
+        selectedItems += `${rows[i].cells[0].textContent}: ${rows[i].cells[1].textContent}\n`;
+    }
+
+    const numberOfPeople = document.getElementById("numberOfPeople").value;
+    const totalAmount = orderOptions["Price"][numberOfPeople];
+
+    // Send order via email
+    const body = `Customer's Order:\n${selectedItems}\nNumber of People: ${numberOfPeople}\nTotal Cost: Rs. ${totalAmount}`;
+    window.open('mailto:aabdula@gitam.in?subject=Catering Order&body=' + encodeURIComponent(body));
+
+    // Display Thank You message with home button
+    document.body.innerHTML = `
+        <div style="text-align: center; padding-top: 100px;">
+            <h1>Thank You for Your Order! 😊</h1>
+            <button onclick="goToHomePage()">Home</button>
+        </div>
+    `;
+}
+
+    </script>
+</body>
+</html>
+

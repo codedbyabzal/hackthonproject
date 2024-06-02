@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andhra Veg Menu</title>
+    <style>
+        /* Add your CSS styling here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2; /* Professional background color */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%; /* Adjust the size as needed */
+            max-width: 800px; /* Set maximum width if necessary */
+            margin: 20px auto; /* Center the container */
+            background-color: #ffffff; /* Classic color for the container */
+            padding: 20px; /* Add padding for content */
+            border-radius: 10px; /* Add rounded corners for a classic look */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+            text-align: left; /* Left align text within the container */
+        }
+        h1, h2 {
+            color: #333; /* Text color */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .price {
+            color: #4CAF50; /* Green color for price */
+        }
+        .total {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Andhra Veg Menu</h1>
+
+        <form id="orderForm" onsubmit="submitOrder(event)">
+            <label for="numberOfPeople">Number of People:</label>
+            <select id="numberOfPeople" name="numberOfPeople">
+                <option value="30">30</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+                <option value="60">60</option>
+                <option value="70">70</option>
+                <option value="80">80</option>
+                <option value="90">90</option>
+                <option value="100">100</option>
+            </select>
+
+            <!-- Drinks -->
+            <h2>Drinks</h2>
+            
+                <select id="drinks" onchange="selectOnlyOne(this)">
+
+                <option value="">Select Drink</option>
+                <option value="Lemon mint">Lemon mint</option>
+                <option value="Lemon ginger">Lemon ginger</option>
+                <option value="Fruit moctall">Fruit moctall</option>
+                <!-- Add more drink options here -->
+            </select>
+
+            <!-- Breakfast Items -->
+            <h2>Breakfast Items</h2>
+            <select id="breakfastItems" onchange="selectOnlyOne(this)">
+                <option value="">Select Breakfast Item</option>
+                <option value="Poori">Poori</option>
+                <option value="Methi poon">Methi poon</option>
+                <!-- Add more breakfast items here -->
+            </select>
+
+            <!-- Lunch Items -->
+            <h2>Lunch Items</h2>
+            <select id="lunchItems" onchange="selectOnlyOne(this)">
+                <option value="">Select Lunch Item</option>
+                <option value="Chapathi">Chapathi</option>
+                <option value="Rumali rot">Rumali rot</option>
+                <!-- Add more lunch items here -->
+            </select>
+
+            <!-- Dinner Items -->
+            <h2>Dinner Items</h2>
+            <select id="dinnerItems" onchange="selectOnlyOne(this)">
+                <option value="">Select Dinner Item</option>
+                <option value="White rice Andhra pappu & Rasam">White rice Andhra pappu & Rasam</option>
+                <option value="Sambar & Rasam">Sambar & Rasam</option>
+                <!-- Add more dinner items here -->
+            </select>
+
+            <h2>Selected Items</h2>
+            <table id="selectedItems">
+                <tr>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Action</th>
+                </tr>
+            </table>
+
+            <h2>Add-Ons (Additional Charges)</h2>
+            <table id="addOns">
+                <tr>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                </tr>
+               
+            </table>
+
+            <h2>Total Amount</h2>
+            <p id="totalAmount" class="total">Total: Rs. 0</p>
+
+            <button type="submit" id="submitButton">Submit Order</button>
+        </form>        
+    </div>
+
+    <script>
+        // Define the order options
+        const orderOptions = {
+            "Buffet Inclusion": ["Buffet tables", "Table & Chairs", "Leaf service (Paper Leaf & Serving set)", "Mineral water can with dispenser & Paper cups", "2-way transportation up to 20km from Kanagar Bargare", "Tissues", "Disposable Spoons", "Bowls", "Paper cups for sweet & water", "Live cooking for Poori, Chapathi, and Roti (for 100 & above)"],
+            "Leaf Service Inclusion": ["Het challing cutter", "Paper Leaf & Servingst"],
+            "Timing": ["Lunch (12:30 pm - 3:00 pm)", "Dinner (7:30 pm - 10:00 pm)"],
+            "Price": {
+                "30": 12600,
+                "40": 16000,
+                "50": 20000,
+                "60": 23000,
+                "70": 20000,
+                "80": 29000,
+                "90": 37000,
+                "100": 35000
+            }
+        };
+
+        
+
+        // Function to generate add-ons table
+        function generateAddOns(category, item, price) {
+            const addOnsTable = document.getElementById("addOns");
+            const row = addOnsTable.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
+
+            cell1.textContent = category;
+            cell2.textContent = item;
+            cell3.textContent = price;
+        }
+
+        // Function to update total amount
+        function updateTotalAmount() {
+            const numberOfPeople = document.getElementById("numberOfPeople").value;
+            const totalAmount = orderOptions["Price"][numberOfPeople];
+            document.getElementById("totalAmount").textContent = `Total: Rs. ${totalAmount}`;
+        }
+
+        // Event listener for drink selection
+        document.getElementById("drinks").addEventListener("change", function() {
+            const selectedDrink = this.value;
+            if (selectedDrink !== "") {
+                generateSelectedItems("Drinks", selectedDrink);
+            }
+        });
+
+        // Event listener for breakfast item selection
+        document.getElementById("breakfastItems").addEventListener("change", function() {
+            const selectedBreakfastItem = this.value;
+            if (selectedBreakfastItem !== "") {
+                generateSelectedItems("Breakfast Items", selectedBreakfastItem);
+            }
+        });
+
+        // Event listener for lunch item selection
+        document.getElementById("lunchItems").addEventListener("change", function() {
+            const selectedLunchItem = this.value;
+            if (selectedLunchItem !== "") {
+                generateSelectedItems("Lunch Items", selectedLunchItem);
+            }
+        });
+
+        // Event listener for dinner item selection
+        document.getElementById("dinnerItems").addEventListener("change", function() {
+            const selectedDinnerItem = this.value;
+            if (selectedDinnerItem !== "") {
+                generateSelectedItems("Dinner Items", selectedDinnerItem);
+            }
+        });
+        
+
+        // Event listener for number of people selection
+        document.getElementById("numberOfPeople").addEventListener("change", function() {
+            updateTotalAmount();
+        });
+
+        // Initial update of total amount
+        updateTotalAmount();
+
+        let previousSelectedOption = null; // Variable to store the previously selected option
+
+        function selectOnlyOne(select) {
+            const options = select && select.options;
+            const selectedOption = options && options[select.selectedIndex];
+
+            // Disable all options except the selected one
+            for (let i = 0; i < options.length; i++) {
+                if (options[i] !== selectedOption) {
+                    options[i].disabled = true;
+                }
+            }
+
+
+    // Enable all options
+    for (let i = 0; i < options.length; i++) {
+        options[i].disabled = false;
+    }
+
+    // Disable the selected option
+    selectedOption.disabled = true;
+}
+
+        
+        function generateSelectedItems(category, item) {
+            const selectedItemsTable = document.getElementById("selectedItems");
+            const row = selectedItemsTable.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
+
+            cell1.textContent = category;
+            cell2.textContent = item;
+
+            // Create the "Delete" button for this row
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener("click", function() {
+                // Delete only this row when the "Delete" button is clicked
+                selectedItemsTable.deleteRow(row.rowIndex);
+
+                // Re-enable the corresponding option in the categories list
+                const dropdown = document.getElementById("yourDropdownId");
+                const options = dropdown.options;
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].value === item && options[i].parentNode.label === category) {
+                        options[i].disabled = false;
+                        break; // Exit loop once found
+                    }
+                }
+            });
+            cell3.appendChild(deleteButton);
+
+            // Add event listener to the second cell (item) to enforce select only one functionality
+            cell2.addEventListener("click", function() {
+                // Get all the rows of the table
+                const rows = selectedItemsTable.rows;
+
+                // Iterate over each row
+                for (let i = 0; i < rows.length; i++) {
+                    // Enable all cells in the second column
+                    rows[i].cells[1].disabled = false;
+                }
+
+                // Disable the clicked cell
+                cell2.disabled = true;
+            });
+        }
+        // Re-enable the corresponding option in the dropdown menu
+// Re-enable the corresponding option in the dropdown menu
+const dropdown = document.getElementById("drinks"); // Check if this ID is correct
+console.log("Dropdown ID:", dropdown.id); // Debugging statement
+const options = dropdown.options;
+for (let i = 0; i < options.length; i++) {
+    if (options[i].value === item && options[i].parentNode.label === category) {
+        options[i].disabled = false;
+        console.log("Option to enable found:", options[i]); // Debugging statement
+        break; // Exit loop once found
+    }
+}
+function submitOrder(event) {
+            event.preventDefault();
+
+            const selectedItemsTable = document.getElementById("selectedItems");
+            const rows = selectedItemsTable.rows;
+            const selectedItems = [];
+            for (let i = 1; i < rows.length; i++) {
+                const category = rows[i].cells[0].textContent;
+                const item = rows[i].cells[1].textContent;
+                selectedItems.push(`${category}: ${item}`);
+            }
+
+            const numberOfPeople = document.getElementById("numberOfPeople").value;
+            const totalAmount = orderOptions["Price"][numberOfPeople];
+            
+            // Send order via email
+            const body = `Customer's Order:\n${selectedItems.join("\n")}\n\nNumber of People: ${numberOfPeople}\nTotal Cost: Rs. ${totalAmount}`;
+            window.open('mailto:aabdula@gitam.in?subject=Catering Order&body=' + encodeURIComponent(body));
+
+            const orderDetails = {
+                numberOfPeople: numberOfPeople,
+                selectedItems: selectedItems,
+                totalAmount: totalAmount,
+                eventDate: eventDate,
+                eventTime: eventTime,
+                customerName: customerName,
+                customerEmail: customerEmail,
+                customerPhone: customerPhone
+            };
+
+            console.log("Order Details:", orderDetails);
+
+            // Here you can submit the order to your backend or do whatever is needed
+            // For now, just console.log the order details
+            alert("Order submitted successfully");
+        }
+
+    </script>
+</body>
+</html>
